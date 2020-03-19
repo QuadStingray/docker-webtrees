@@ -1,5 +1,7 @@
 # quadstingray/webtrees:2.0.2
 
+![Docker Build Status](https://img.shields.io/docker/build/quadstingray/webtrees) ![Docker Pulls](https://img.shields.io/docker/pulls/quadstingray/webtrees) ![Docker Image Size (latest by date)](https://img.shields.io/docker/image-size/quadstingray/webtrees) ![Docker Image Version (latest by date)](https://img.shields.io/docker/v/quadstingray/webtrees) 
+
 - [Introduction](#introduction)
   - [Contributing](#contributing)
   - [Issues](#issues)
