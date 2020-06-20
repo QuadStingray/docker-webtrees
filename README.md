@@ -1,4 +1,4 @@
-# quadstingray/webtrees:2.0.2
+# quadstingray/webtrees:2.0.6
 
 ![Docker Build Status](https://img.shields.io/docker/build/quadstingray/webtrees) ![Docker Pulls](https://img.shields.io/docker/pulls/quadstingray/webtrees) ![Docker Image Size (latest by date)](https://img.shields.io/docker/image-size/quadstingray/webtrees) ![Docker Image Version (latest by date)](https://img.shields.io/docker/v/quadstingray/webtrees) 
 
@@ -34,7 +34,7 @@ Automated builds of the image are available on
 [Dockerhub](https://hub.docker.com/r/quadstingray/webtrees)
 
 ```bash
-docker pull quadstingray/webtrees:2.0.2
+docker pull quadstingray/webtrees:2.0.6
 ```
 
 Alternatively you can build the image yourself.
@@ -46,7 +46,7 @@ docker build . --tag 'quadstingray/webtrees:dev';
 Start Webtrees using:
 
 ```bash
-docker run --publish 80:80 quadstingray/webtrees:2.0.2
+docker run --publish 80:80 quadstingray/webtrees:2.0.6
 ```
 
 ## Persistence
