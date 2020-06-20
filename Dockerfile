@@ -23,7 +23,7 @@ RUN docker-php-ext-configure intl
 RUN docker-php-ext-configure pdo_mysql
 RUN docker-php-ext-configure pdo_pgsql
 RUN docker-php-ext-configure pgsql
-RUN docker-php-ext-install -j$(nproc) pdo_mysql gd zip intl pdo_pgsql pgsql
+RUN docker-php-ext-install -j$(nproc) pdo_mysql gd zip intl pdo_pgsql pgsql exif
 RUN unzip webtrees-${WEBTREES_VERION}.zip
 RUN mkdir /usr/local/tome
 RUN rm -rf /var/www/html
