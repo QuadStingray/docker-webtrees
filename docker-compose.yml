@@ -39,5 +39,5 @@ services:
     container_name: webtrees-volumes
     volumes:
       - ./mysql:/var/lib/mysql
-      - ./Data:/var/www/html/data
+      - ./genealogy/Data:/var/www/html/data
       
