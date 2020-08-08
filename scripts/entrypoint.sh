@@ -39,12 +39,8 @@ fi
 
 printf "$upload_ini" > /usr/local/etc/php/conf.d/uploads.ini
 
-apache2-foreground &
 
 trap "shut_down" SIGKILL SIGTERM SIGHUP SIGINT EXIT
 
-while true
-do
-  i="do nothing"
-done
+apache2-foreground 
 
