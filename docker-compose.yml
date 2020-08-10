@@ -1,0 +1,43 @@
+# WEBTREES DOCKER COMPOSE
+#
+# start   http://localhost:10088
+#
+
+version: '2'
+services:
+
+  webtrees:
+    build:
+       context: ./webtrees
+    container_name:  webtrees2
+    links:
+      - webtrees-mysql:webtrees-mysql
+    ports:
+      - "10088:80"
+    depends_on:
+      - webtrees-mysql
+      - webtrees-data-volumes
+    volumes_from: 
+      - webtrees-data-volumes
+       
+  webtrees-mysql:
+    image: mysql:8.0
+    container_name: webtrees-mysql
+    user: root
+    environment:
+      - MYSQL_ROOT_PASSWORD=mustnotchange
+      - MYSQL_DATABASE=webtrees
+      - MYSQL_USER=webtrees
+      - MYSQL_PASSWORD=mustnotchange
+    volumes_from: 
+      - webtrees-data-volumes
+    depends_on:
+      - webtrees-data-volumes
+
+  webtrees-data-volumes:
+    image: busybox
+    container_name: webtrees-volumes
+    volumes:
+      - ./mysql:/var/lib/mysql
+      - ./genealogy/Data:/var/www/html/data
+      

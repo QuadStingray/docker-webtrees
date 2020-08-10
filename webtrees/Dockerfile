@@ -1,6 +1,6 @@
 FROM php:7.4.2-apache
 
-ENV WEBTREES_VERION="2.0.6"
+ENV WEBTREES_VERION="2.0.7"
 
 WORKDIR /tmp_download
 
@@ -17,6 +17,12 @@ RUN apt-get install -y \
        libicu-dev \
        unzip \
        libpq-dev
+
+# The following two statements enable ImageMagick
+RUN apt-get upgrade -y
+RUN apt-get install -y libmagickwand-dev --no-install-recommends && \
+    pecl install imagick && docker-php-ext-enable imagick
+
 RUN docker-php-ext-configure gd
 RUN docker-php-ext-configure zip
 RUN docker-php-ext-configure intl
