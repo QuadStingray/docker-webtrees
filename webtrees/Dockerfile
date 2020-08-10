@@ -1,4 +1,4 @@
-FROM php:7.4.2-apache
+FROM php:7.4.7-apache
 
 ENV WEBTREES_VERION="2.0.7"
 
