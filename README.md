@@ -1,4 +1,4 @@
-# hgeorgsch/webtrees:2.0.7
+# QuadStingray/webtrees:2.0.7
 
 ![Docker Build Status](https://img.shields.io/docker/build/quadstingray/webtrees) ![Docker Pulls](https://img.shields.io/docker/pulls/quadstingray/webtrees) ![Docker Image Size (latest by date)](https://img.shields.io/docker/image-size/quadstingray/webtrees) ![Docker Image Version (latest by date)](https://img.shields.io/docker/v/quadstingray/webtrees) 
 
@@ -14,25 +14,10 @@
 # Introduction
 Git-Repository to build [Docker](https://www.docker.com/) containerimage for [Webtrees](https://github.com/fisharebest/webtrees).
 
-This is a fork of [Quadstring's](https://github.com/QuadStingray/docker-webtrees) docker image.  I was not able to run his original image, and had to make several changes to make it work:
-- changed the entrypoint script to reduce CPU load
-- add ImageMagick to the webtrees server
-- added a docker compose file which includes a mySQL database.
-
-You should now be able to use the image simply by running
-
-```bash
-docker-compose up -d
-```
-
-You access the server on http://localhost:10088/.  Choose mySQL for
-the database, enter webtrees-mysql for the database host, and port 3306.
-Username, password, and DB name are your choices.
-
 ## Contributing
 If you find this image helpfull, so you can see here how you can help:
 - Send a pull request with your features and bug fixes
-- Help users resolve their [issues](https://github.com/hgeorgsch/docker-webtrees/issues).
+- Help users resolve their [issues](https://github.com/QuadStingray/docker-webtrees/issues).
 
 ## Issues
 Before reporting your issue please try updating Docker to the latest version and check if it resolves the issue. Refer to the Docker [installation guide](https://docs.docker.com/installation) for instructions.
@@ -49,7 +34,7 @@ Automated builds of the image are available on
 [Dockerhub](https://hub.docker.com/r/quadstingray/webtrees)
 
 ```bash
-docker pull quadstingray/webtrees:2.0.6
+docker pull quadstingray/webtrees:2.0.7
 ```
 
 Alternatively you can build the image yourself.
@@ -57,12 +42,24 @@ Alternatively you can build the image yourself.
 docker build . --tag 'quadstingray/webtrees:dev';
 ```
 
+## docker-compose
+You should now be able to use the image simply by running
+
+```bash
+docker-compose up -d
+```
+You access the server on http://localhost:10088/.  Choose mySQL for
+the database, enter webtrees-mysql for the database host, and port 3306.
+Username, password, and DB name are your choices.
+
 ## Quickstart
 Start Webtrees using:
 
 ```bash
-docker run --publish 80:80 quadstingray/webtrees:2.0.6
+docker run --publish 80:80 quadstingray/webtrees:2.0.7
 ```
+
+
 
 ## Persistence
 Webtrees store his dat by default  `/var/www/html/data`. So for persistence of your data and database config, you should mount an external volume to that path.
