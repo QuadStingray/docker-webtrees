@@ -1,4 +1,4 @@
-FROM quadstingray/webtrees:2.0.9
+FROM quadstingray/webtrees:2.0.10
 
 WORKDIR /tmp_download
 
