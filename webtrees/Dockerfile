@@ -1,6 +1,6 @@
 FROM php:7.4.11-apache
 
-ENV WEBTREES_VERION="2.0.10"
+ENV WEBTREES_VERION="2.0.11"
 
 WORKDIR /tmp_download
 
