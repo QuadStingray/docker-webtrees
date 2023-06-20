@@ -1,0 +1,89 @@
+name: Publish Docker image
+
+on:
+  push:
+    tags:
+      - '*'
+
+env:
+  build_latest: auto
+
+jobs:
+  push_to_registry:
+    name: Push Docker image to Docker Hub
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@v3
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v2.1.0
+        with:
+          username: ${{ secrets.DOCKERHUB_USER }}
+          password: ${{ secrets.DOCKERHUB_PASSWORD }}
+
+      - name: Extract metadata (tags, labels) for Docker
+        id: meta
+        uses: docker/metadata-action@v4.3.0
+        with:
+          images: quadstingray/webtrees
+          flavor: |
+            latest=${{ env.build_latest }}
+          tags: |
+            type=semver,pattern={{version}}
+            type=semver,pattern={{major}}.{{minor}}
+            type=semver,pattern={{major}}
+
+      - name: Build and push base Docker image
+        uses: docker/build-push-action@v4.0.0
+        with:
+          context: ./webtrees
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+
+      - name: Extract metadata (tags, labels) for Vesta Docker
+        id: metavesta
+        uses: docker/metadata-action@v4.3.0
+        with:
+          images: quadstingray/webtrees
+          flavor: |
+            latest=${{ env.build_latest }}
+          tags: |
+            type=semver,pattern={{version}}
+            type=semver,pattern={{major}}.{{minor}}
+            type=semver,pattern={{major}}
+
+      - name: Build and push Vesta Docker image
+        uses: docker/build-push-action@v4.0.0
+        with:
+          context: ./vesta
+          push: true
+          tags: ${{ steps.metavesta.outputs.tags }}
+          labels: ${{ steps.metavesta.outputs.labels }}
+
+      - name: Update readme at Dockerhub
+        if: ${{ env.build_latest == 'auto' }}
+        uses: meeDamian/sync-readme@v1.0.6
+        with:
+          user: ${{ secrets.DOCKERHUB_USER }}
+          pass: ${{ secrets.DOCKERHUB_PASSWORD }}
+          slug: quadstingray/webtrees
+          readme: README.md
+          description: true
+
+      - name: Run Trivy vulnerability scanner
+        if: ${{ env.build_latest == 'auto' }}
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: 'quadstingray/webtrees:latest'
+          format: 'sarif'
+          output: 'trivy-results.sarif'
+          ignore-unfixed: true
+
+      - name: Upload Trivy scan results to GitHub Security tab
+        if: ${{ env.build_latest == 'auto' }}
+        uses: github/codeql-action/upload-sarif@v2
+        with:
+          sarif_file: 'trivy-results.sarif'
