@@ -44,15 +44,17 @@ jobs:
 
       - name: Extract metadata (tags, labels) for Vesta Docker
         id: metavesta
-        uses: docker/metadata-action@v4.3.0
+        uses: docker/metadata-action@v4.6.0
         with:
           images: quadstingray/webtrees
           flavor: |
-            latest=${{ env.build_latest }}
+            latest=false
           tags: |
-            type=semver,pattern={{version}}
-            type=semver,pattern={{major}}.{{minor}}
-            type=semver,pattern={{major}}
+            type=semver,pattern={{version}}-vesta
+            type=semver,pattern={{major}}.{{minor}}-vesta
+            type=semver,pattern={{major}}-vesta
+            type=raw,value=latest-vesta
+
 
       - name: Build and push Vesta Docker image
         uses: docker/build-push-action@v4.0.0
