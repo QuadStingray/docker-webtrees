@@ -1,4 +1,4 @@
-# QuadStingray/webtrees:2.1.16
+# QuadStingray/webtrees:2.1.15
 
 ![Docker Pulls](https://img.shields.io/docker/pulls/quadstingray/webtrees) ![Docker Image Size (latest by date)](https://img.shields.io/docker/image-size/quadstingray/webtrees) ![Docker Image Version (latest by date)](https://img.shields.io/docker/v/quadstingray/webtrees) 
 
@@ -34,7 +34,7 @@ Automated builds of the image are available on
 [Dockerhub](https://hub.docker.com/r/quadstingray/webtrees)
 
 ```bash
-docker pull quadstingray/webtrees:2.1.16
+docker pull quadstingray/webtrees:2.1.15
 ```
 
 Alternatively you can build the image yourself.
@@ -56,7 +56,7 @@ Username, password, and DB name are your choices.
 Start Webtrees using:
 
 ```bash
-docker run --publish 80:80 quadstingray/webtrees:2.1.16
+docker run --publish 80:80 quadstingray/webtrees:2.1.15
 ```
 
 
