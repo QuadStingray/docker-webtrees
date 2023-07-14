@@ -9,7 +9,7 @@ services:
   webtrees:
 #    build:
 #       context: ./webtrees
-    image: quadstingray/webtrees:2.1.16
+    image: quadstingray/webtrees:2.1.17
     container_name:  webtrees2
     links:
       - webtrees-mysql:webtrees-mysql
