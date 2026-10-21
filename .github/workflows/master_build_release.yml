@@ -42,27 +42,27 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
 
-      - name: Extract metadata (tags, labels) for Vesta Docker
-        id: metavesta
+      - name: Extract metadata (tags, labels) for Custom Module Manager Docker
+        id: metacmm
         uses: docker/metadata-action@v4.6.0
         with:
           images: quadstingray/webtrees
           flavor: |
             latest=false
           tags: |
-            type=semver,pattern={{version}}-vesta
-            type=semver,pattern={{major}}.{{minor}}-vesta
-            type=semver,pattern={{major}}-vesta
-            type=raw,value=latest-vesta
+            type=semver,pattern={{version}}-cmm
+            type=semver,pattern={{major}}.{{minor}}-cmm
+            type=semver,pattern={{major}}-cmm
+            type=raw,value=latest-cmm
 
 
-      - name: Build and push Vesta Docker image
+      - name: Build and push Custom Module Manager Docker image
         uses: docker/build-push-action@v4.0.0
         with:
-          context: ./vesta
+          context: ./custom-module-manager
           push: true
-          tags: ${{ steps.metavesta.outputs.tags }}
-          labels: ${{ steps.metavesta.outputs.labels }}
+          tags: ${{ steps.metacmm.outputs.tags }}
+          labels: ${{ steps.metacmm.outputs.labels }}
 
       - name: Update readme at Dockerhub
         if: ${{ env.build_latest == 'auto' }}

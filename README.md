@@ -59,6 +59,15 @@ Start Webtrees using:
 docker run --publish 80:80 quadstingray/webtrees:2.2.6
 ```
 
+## Custom Module Manager
+The image `quadstingray/webtrees:2.2.6-cmm` (or `latest-cmm`) additionally contains the [Custom Module Manager](https://github.com/Jefferson49/CustomModuleManager), which installs and updates webtrees custom modules from the control panel.
+
+```bash
+docker run --publish 80:80 quadstingray/webtrees:2.2.6-cmm
+```
+
+Modules installed by the Custom Module Manager are stored in `/var/www/html/modules_v4`. To keep them when the container is recreated, mount a named volume to that path (a named volume is initialized with the bundled Custom Module Manager, an empty bind mount would hide it).
+
 
 
 ## Persistence

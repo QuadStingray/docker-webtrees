@@ -1,4 +1,4 @@
-FROM php:8.4.27-apache
+FROM php:8.5.12-apache
 
 ENV WEBTREES_VERION="2.2.6"
 
