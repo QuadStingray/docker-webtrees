@@ -8,6 +8,10 @@ on:
 env:
   build_latest: auto
 
+permissions:
+  contents: read
+  security-events: write
+
 jobs:
   push_to_registry:
     name: Push Docker image to Docker Hub
@@ -38,6 +42,8 @@ jobs:
         uses: docker/build-push-action@v4.0.0
         with:
           context: ./webtrees
+          pull: true
+          no-cache: true
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
@@ -60,6 +66,8 @@ jobs:
         uses: docker/build-push-action@v4.0.0
         with:
           context: ./custom-module-manager
+          pull: true
+          no-cache: true
           push: true
           tags: ${{ steps.metacmm.outputs.tags }}
           labels: ${{ steps.metacmm.outputs.labels }}
@@ -76,7 +84,7 @@ jobs:
 
       - name: Run Trivy vulnerability scanner
         if: ${{ env.build_latest == 'auto' }}
-        uses: aquasecurity/trivy-action@master
+        uses: aquasecurity/trivy-action@ed142fd0673e97e23eac54620cfb913e5ce36c25 # v0.36.0
         with:
           image-ref: 'quadstingray/webtrees:latest'
           format: 'sarif'
@@ -85,6 +93,6 @@ jobs:
 
       - name: Upload Trivy scan results to GitHub Security tab
         if: ${{ env.build_latest == 'auto' }}
-        uses: github/codeql-action/upload-sarif@v2
+        uses: github/codeql-action/upload-sarif@1bd86f2fdb4b86187fa4059f16f31a3202acc9ea # v4.39.4
         with:
           sarif_file: 'trivy-results.sarif'

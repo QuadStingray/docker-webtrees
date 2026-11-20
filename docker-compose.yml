@@ -20,9 +20,23 @@ services:
       - webtrees-data-volumes
     volumes_from: 
       - webtrees-data-volumes
+    # hardening: limit what an attacker could do after a compromise of the web
+    # application (e.g. exploit chains like NGINX2Root that need extra privileges)
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    cap_add:
+      - CHOWN
+      - SETUID
+      - SETGID
+      - NET_BIND_SERVICE
+      - KILL
+    restart: unless-stopped
        
   webtrees-mysql:
-    image: mysql:8.0
+    # MySQL 8.0 is end of life since April 2026, 8.4 is the current LTS
+    image: mysql:8.4
     container_name: webtrees-mysql
     user: root
     environment:

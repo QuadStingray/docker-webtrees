@@ -70,6 +70,23 @@ Modules installed by the Custom Module Manager are stored in `/var/www/html/modu
 
 
 
+## Security
+
+The image is rebuilt from the current `php:8.5-apache` (Debian trixie) base with all Debian security updates applied. Build-only packages (`*-dev`, compiler) are removed again, and the PHP libraries shipped with webtrees (guzzle, commonmark, symfony, flysystem) are raised to their patched releases during the build.
+
+- Apache runs its workers as `www-data`. The application code belongs to `root` and is read-only for the web server; only `/var/www/html/data` and `/var/www/html/modules_v4` are writable. Because of this, the built-in "upgrade webtrees" function of the control panel does not work. Upgrade by pulling a new image instead.
+- Recommended `docker run` options (already set in `docker-compose.yml`):
+
+```bash
+docker run --publish 80:80 \
+  --security-opt no-new-privileges:true \
+  --cap-drop ALL --cap-add CHOWN --cap-add SETUID --cap-add SETGID --cap-add NET_BIND_SERVICE --cap-add KILL \
+  quadstingray/webtrees:2.2.6
+```
+
+### NGINX2Root (CVE-2026-123007 and related)
+This image uses Apache httpd, not nginx, and is not affected by the NGINX2Root bugs itself. If you run nginx as a reverse proxy in front of webtrees, update it to 1.30.7 / 1.31.9 or newer (or disable HTTP/2 until then). The published exploit chain escapes from the container through a Linux kernel bug in SCTP, so also update the kernel of the Docker host. Until a kernel fix is available, you can block the module on the host with `echo "install sctp /bin/false" > /etc/modprobe.d/disable-sctp.conf`. This does not help if SCTP is compiled into the kernel or the module is already loaded.
+
 ## Persistence
 Webtrees store his dat by default  `/var/www/html/data`. So for persistence of your data and database config, you should mount an external volume to that path.
 

@@ -1,12 +1,6 @@
 #!/bin/bash
 set -e
 
-function shut_down() {
-    echo "shutting down"
-    apachectl -k stop
-    exit
-}
-
 if test -f "/usr/local/etc/php/conf.d/uploads.ini"; then
   upload_ini=`cat /usr/local/etc/php/conf.d/uploads.ini`
 fi
@@ -39,8 +33,7 @@ fi
 
 printf "$upload_ini" > /usr/local/etc/php/conf.d/uploads.ini
 
-
-trap "shut_down" SIGKILL SIGTERM SIGHUP SIGINT EXIT
-
-apache2-foreground 
+# exec: apache becomes PID 1 and receives the stop signal from docker directly
+# (graceful stop via SIGWINCH, see STOPSIGNAL of the php:apache base image)
+exec apache2-foreground "$@"
 
